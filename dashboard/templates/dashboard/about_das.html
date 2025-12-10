@@ -1,0 +1,906 @@
+
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About - DaS Department of Data Science</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <style>
+  :root{
+    --c1:#6B3F69;
+    --c2:#8D5F8C;
+    --c3:#A376A2;
+    --c4:#DDC3C3;
+    --bg-dark: #0f0c10;
+    --maxw: 1200px;
+    --slide-w: 640px;
+    --ff-head: "Inter", "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    --box-w: 280px;
+    --box-h: 220px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  
+  html,body{
+    height:100%;
+    background:linear-gradient(180deg,var(--bg-dark) 0%, #141018 100%);
+    color: #fff;
+    font-family:var(--ff-head);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* Header */
+  header.topbar{
+    position:fixed;
+    left:0;
+    right:0;
+    top:18px;
+    z-index:80;
+    display:flex;
+    justify-content:center;
+    pointer-events:none;
+  }
+  
+  .topbar-inner{
+    width:100%;
+    max-width:var(--maxw);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:10px 16px;
+    pointer-events:auto;
+    background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.03);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 8px 40px rgba(4,3,6,0.6);
+  }
+
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-weight:700;
+    color:var(--c4);
+    text-decoration:none;
+  }
+  
+  .logo .meta{
+    font-size:12px;
+    color:rgba(255,255,255,0.8);
+    line-height:1;
+  }
+
+  nav.header-nav{
+    display:flex;
+    gap:18px;
+    align-items:center;
+  }
+  
+  nav a{
+    color:rgba(255,255,255,0.9);
+    text-decoration:none;
+    padding:8px 12px;
+    border-radius:10px;
+    font-weight:600;
+    transition:all .25s;
+  }
+  
+  nav a:hover, nav a.active{
+    transform:translateY(-4px);
+    color:#fff;
+    box-shadow:0 10px 30px rgba(107,63,105,0.08);
+    background:rgba(255,255,255,0.02);
+  }
+
+  /* Main Content */
+  main{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:120px 40px 60px;
+  }
+
+  .page-header{
+    text-align:center;
+    margin-bottom:60px;
+  }
+
+  .page-header h1{
+    font-size:56px;
+    margin:0 0 20px;
+    background: linear-gradient(135deg, #fff, var(--c3));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    font-weight:800;
+  }
+
+  .page-header .subtitle{
+    color:var(--c4);
+    font-size:22px;
+    font-weight:600;
+    opacity:0.9;
+  }
+
+  .content-section{
+    margin-bottom:60px;
+    opacity:1;
+    transform:none;
+  }
+
+  .content-section h2{
+    color:var(--c3);
+    font-size:36px;
+    margin:0 0 24px;
+    font-weight:700;
+  }
+
+  .content-section p{
+    color:rgba(255,255,255,0.85);
+    line-height:1.8;
+    font-size:18px;
+    margin:0 0 20px;
+  }
+
+  .feature-grid{
+    display:flex;
+    gap:28px;
+    margin-top:40px;
+    align-items:flex-start;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    padding-bottom:8px;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scroll-snap-stop: always;
+    padding-inline: 0;
+    scroll-padding-inline: 0;
+  }
+
+  .feature-card{
+    background:rgba(163,118,162,0.12);
+    padding:28px;
+    border-radius:20px;
+    border:1px solid rgba(163,118,162,0.18);
+    transition:all 0.4s cubic-bezier(.2,.9,.25,1);
+    position:relative;
+    overflow:hidden;
+    display:grid;
+    grid-template-columns:220px 1fr;
+    gap:18px;
+    align-items:start;
+    min-height:160px;
+    flex:0 0 100%;
+  }
+
+  .feature-card{scroll-snap-align:start}
+
+  .feature-card{
+    font-size:16px;
+    line-height:1.6;
+  }
+
+  .feature-card.match-size{
+    max-width:none;
+    margin:0;
+    min-height:180px;
+    display:grid;
+    grid-template-columns:220px 1fr;
+    gap:18px;
+    flex:0 0 100%;
+  }
+
+  /* Carousel controls */
+  .carousel{position:relative}
+
+  .carousel-button{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    background:rgba(0,0,0,0.45);
+    color:#fff;
+    border:0;
+    width:44px;
+    height:44px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    cursor:pointer;
+    z-index:30;
+    transition:all .18s;
+  }
+
+  .carousel-button:hover{transform:translateY(-50%) scale(1.05)}
+
+  .carousel-button.prev{left:6px}
+  .carousel-button.next{right:6px}
+
+  .carousel-dots{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    bottom:8px;
+    display:flex;
+    gap:8px;
+    z-index:30;
+  }
+
+  .carousel-dots .dot{
+    width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.25);cursor:pointer;border:0}
+
+  .carousel-dots .dot.active{background:linear-gradient(90deg,var(--c2),var(--c3))}
+
+  .feature-card::before{
+    content:'';
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:4px;
+    background:linear-gradient(90deg, var(--c2), var(--c3));
+    opacity:0;
+    transition:opacity 0.4s;
+  }
+
+  .feature-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 30px 70px rgba(107,63,105,0.3);
+    border-color:var(--c3);
+    background:rgba(163,118,162,0.12);
+  }
+
+  .feature-card:hover::before{
+    opacity:1;
+  }
+
+  .feature-card h3{
+    color:#ffffff;
+    font-size:16px;
+    margin:0 0 12px;
+    font-weight:700;
+  }
+
+  .feature-card h4{
+    color:var(--c3);
+    font-size:20px;
+    margin:20px 0 10px;
+    font-weight:600;
+  }
+
+  .feature-card p{
+    color:rgba(255,255,255,0.9);
+    margin:0 0 12px;
+    font-size:16px;
+    line-height:1.6;
+  }
+
+  .feature-card h3,
+  .feature-card p:first-of-type{
+    grid-column:1;
+  }
+
+  .feature-card ul{
+    grid-column:2;
+    margin:0;
+    padding-left:18px;
+  }
+
+  .highlight-section{
+    background:linear-gradient(135deg, rgba(107,63,105,0.15), rgba(163,118,162,0.08));
+    padding:40px;
+    border-radius:20px;
+    border:1px solid rgba(163,118,162,0.2);
+    margin:50px 0;
+  }
+
+  .highlight-section h2{
+    color:#fff;
+    margin-bottom:20px;
+  }
+
+  .stats-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+    gap:30px;
+    margin-top:50px;
+  }
+
+  .stat-box{
+    text-align:center;
+    padding:30px;
+    background:rgba(163,118,162,0.08);
+    border-radius:16px;
+    border:1px solid rgba(163,118,162,0.15);
+    transition:all 0.3s;
+  }
+
+  .stat-box:hover{
+    transform:translateY(-8px);
+    border-color:var(--c3);
+    background:rgba(163,118,162,0.12);
+  }
+
+  .stat-box .number{
+    font-size:48px;
+    font-weight:800;
+    background: linear-gradient(135deg, var(--c2), var(--c3));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    margin-bottom:10px;
+  }
+
+  .stat-box .label{
+    color:var(--c4);
+    font-size:16px;
+    font-weight:600;
+  }
+
+  /* Branch box + small boxes */
+  .branch-box{
+    background:rgba(107,63,105,0.20);
+    padding:28px;
+    border-radius:16px;
+    border:1px solid rgba(163,118,162,0.22);
+    box-shadow:0 12px 40px rgba(0,0,0,0.22);
+    margin-bottom:28px;
+  }
+  .branch-box h2{ font-size:26px; color:var(--c3); margin:0 0 10px; font-weight:700; }
+  .branch-box p{ color:rgba(255,255,255,0.92); line-height:1.6; margin:0 0 12px; font-size:15px; }
+  .branch-box ul{ margin-left:18px; color:rgba(255,255,255,0.95); font-size:15px; line-height:1.6; }
+  .branch-box li{ margin-bottom:8px; }
+
+  .boxes-row{
+    display:flex;
+    gap:20px;
+    margin:18px 0 28px;
+    overflow-x:auto;
+    padding-bottom:8px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .info-box{
+    flex:0 0 auto;
+    width:var(--box-w);
+    height:var(--box-h);
+    background:linear-gradient(180deg, rgba(107,63,105,0.14), rgba(163,118,162,0.06));
+    border:1px solid rgba(163,118,162,0.18);
+    border-radius:14px;
+    padding:16px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+  }
+
+  .info-box h4{
+    font-size:16px;
+    margin:0 0 8px;
+    color:#fff;
+  }
+  .info-box p{
+    font-size:13px;
+    color:rgba(255,255,255,0.9);
+    line-height:1.5;
+    margin:0 0 10px;
+    flex:1 1 auto;
+  }
+  .info-box .small-cta{
+    font-size:13px;
+    padding:8px 10px;
+    border-radius:8px;
+    background:linear-gradient(90deg,var(--c2),var(--c3));
+    color:#fff;
+    text-align:center;
+    text-decoration:none;
+    display:inline-block;
+  }
+
+  /* Faculty Section */
+  .faculty-section{
+    max-width:var(--maxw);
+    margin:0 auto 40px;
+    padding:40px 20px;
+    text-align:center;
+  }
+
+  .faculty-section h2{
+    color:var(--c3);
+    font-size:32px;
+    margin:0 0 30px;
+    font-weight:700;
+  }
+
+  .faculty-card{
+    display:inline-block;
+    background:rgba(163,118,162,0.12);
+    padding:30px;
+    border-radius:20px;
+    border:1px solid rgba(163,118,162,0.18);
+    transition:all 0.4s;
+  }
+
+  .faculty-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 50px rgba(107,63,105,0.3);
+    border-color:var(--c3);
+  }
+
+  .faculty-photo{
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    object-fit:cover;
+    margin:0 auto 20px;
+    display:block;
+    border:3px solid var(--c3);
+  }
+
+  .faculty-card h3{
+    color:#fff;
+    font-size:24px;
+    margin:0 0 8px;
+    font-weight:700;
+  }
+
+  .faculty-card p{
+    color:var(--c4);
+    font-size:16px;
+    margin:0;
+  }
+
+  footer{
+    text-align:center;
+    padding:40px 20px;
+    color:rgba(255,255,255,0.5);
+    font-size:14px;
+  }
+
+  /* Mobile */
+  @media(max-width:768px){
+    .page-header h1{font-size:36px}
+    main{padding:100px 20px 40px}
+    .feature-grid{grid-template-columns:1fr}
+    .feature-grid{display:block}
+    .feature-card,
+    .feature-card.match-size{display:block; grid-template-columns:1fr; padding:22px; flex:1 1 auto; width:100%;}
+    .feature-grid{padding-inline:0; scroll-padding-inline:0}
+    .content-section h2{font-size:28px}
+    nav.header-nav{display:none}
+
+    .boxes-row{ gap:12px; }
+    .info-box{ width:260px; height:200px; }
+
+ 
+    
+  }
+
+  /* Row layout */
+.faculty-row {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+/* Make every faculty card same exact size */
+.faculty-card {
+  width: 260px;
+  height: 380px;     /* FIXED HEIGHT so all are equal */
+  text-align: center;
+  padding: 30px;
+  border-radius: 20px;
+  background: rgba(163,118,162,0.12);
+  border: 1px solid rgba(163,118,162,0.18);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transition: 0.3s ease;
+}
+
+/* Same size photos */
+.faculty-photo {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--c3);
+  margin: 0 auto 15px;
+}
+
+/* Name + Role spacing fix */
+.faculty-card h3 {
+  margin-bottom: 8px;
+}
+
+.faculty-card p {
+  margin-top: auto;   /* keeps text aligned evenly */
+}
+
+  </style>
+  
+</head>
+<body>
+  <!-- Header -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="logo" href="index.html">
+        <div class="meta">
+          <div style="font-weight:800">DaS</div>
+          <div style="font-size:12px;opacity:0.75;margin-top:4px">Department of Data Science</div>
+        </div>
+      </a>
+
+      <nav class="header-nav">
+        <a href="{% url 'dashboard:main' %}">Home</a>
+        <a href="{% url 'dashboard:about_das' %}" class="active">About</a>
+        <a href="{% url 'dashboard:contact_das' %}">Contact</a>
+        <a href="{% url 'dashboard:profile' %}">Profile</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- About College Box -->
+<div class="branch-box about-college" aria-labelledby="college-title">
+  <img src="{% static 'images/logo1.jpeg' %}" alt="Vaagdevi College Logo" style="width:px; height:120px; display:block; margin:0 auto 15px; object-fit:contain;">
+
+  <h2 id="college-title">About Vaagdevi College of Engineering</h2>
+
+  <p>
+    Vaagdevi College of Engineering (VCE), located in Bollikunta, Warangal, is a leading institute 
+    under the Viswambhara Educational Society. The college is known for quality engineering education, 
+    discipline, and a student-centric learning environment.
+  </p>
+
+  <ul>
+    <li><strong>Affiliation:</strong> JNTU Hyderabad (JNTUH)</li>
+    <li><strong>Facilities:</strong> Smart classrooms, advanced laboratories, digital library, innovation centers</li>
+    <li><strong>Industry Connect:</strong> Workshops, internships, technical fests & MoUs with companies</li>
+    <li><strong>Placements:</strong> Strong training & placement cell with top recruiter collaborations</li>
+  </ul>
+</div>
+
+    <!-- Branch Box -->
+    <div class="branch-box" aria-labelledby="branch-title">
+      <h2 id="branch-title">About the Data Science Branch</h2>
+      <p>
+        Data Science focuses on extracting insights from data using Machine Learning,
+        Artificial Intelligence, Statistics, and Programming. It prepares students for
+        practical, industry-ready roles across many domains.
+      </p>
+      <ul>
+        <li><strong>Core Skills:</strong> Python, SQL, ML, AI, Deep Learning</li>
+        <li><strong>Careers:</strong> Data Scientist, ML Engineer, Analyst, AI Developer</li>
+        <li><strong>Why DS?</strong> High demand, global opportunities, and strong career growth</li>
+      </ul>
+    </div>
+
+    <!-- Row of small boxes -->
+    <div class="boxes-row" role="list" aria-label="Quick boxes">
+      <div class="info-box" role="listitem" aria-labelledby="box-dq">
+        <h4 id="box-dq">Data Quest Club</h4>
+        <p>Hands-on technical club for practical data science — workshops, projects, competitions, and mentorship.</p>
+        <a class="small-cta" href="#clubs">Learn</a>
+      </div>
+
+      <div class="info-box" role="listitem" aria-labelledby="box-ch">
+        <h4 id="box-ch">Caring Hands Club</h4>
+        <p>Community outreach and social impact activities: blood drives, tutoring, clean-ups, and awareness campaigns.</p>
+        <a class="small-cta" href="#clubs">Join</a>
+      </div>
+
+      <div class="info-box" role="listitem" aria-labelledby="box-sy">
+        <h4 id="box-sy">Syllabus Box</h4>
+        <p>Academic hub: year-wise subject lists, previous year papers, PDF notes, recommended readings and datasets.</p>
+        <a class="small-cta" href="#clubs">Open</a>
+      </div>
+
+      <div class="info-box" role="listitem" aria-labelledby="box-ev">
+        <h4 id="box-ev">Events & Celebrations</h4>
+        <p>Major campus events — P4P showcases, Teachers' Day, Ganesh Chaturthi and other community gatherings.</p>
+        <a class="small-cta" href="#clubs">Events</a>
+      </div>
+
+      <div class="info-box" role="listitem" aria-labelledby="box-which">
+        <h4 id="box-which">Which Is Better?</h4>
+        <p>Quick guidance: Data Quest for technical growth, Caring Hands for social impact — many students join both.</p>
+        <a class="small-cta" href="#clubs">Decide</a>
+      </div>
+    </div>
+
+    <div class="page-header">
+      <h1>About DaS</h1>
+    </div>
+
+    <div class="highlight-section" id="why-das" aria-labelledby="why-heading">
+      <h2 id="why-heading">Why use the DaS Website?</h2>
+      <p>The DaS website centralizes academic and community resources so students can find what they need quickly and reliably. It supports learning, collaboration, and campus engagement by providing:</p>
+      <ul>
+        <li><strong>Organized curriculum:</strong> Year- and semester-wise subject listings and up-to-date syllabus copies.</li>
+        <li><strong>Exam preparation:</strong> Previous year question papers and curated PDF notes for focused study.</li>
+        <li><strong>Learning resources:</strong> Curated MOOCs, datasets, and recommended readings to supplement coursework.</li>
+        <li><strong>Community & clubs:</strong> Central place to discover clubs (Data Quest, Caring Hands) and join activities.</li>
+        <li><strong>Events & opportunities:</strong> Announcements for hackathons, symposiums, E-Summit, and campus celebrations.</li>
+        <li><strong>Mentorship & industry links:</strong> Guest lectures, internship notices, and alumni connections to bridge academics with industry.</li>
+      </ul>
+    </div>
+
+    <div class="content-section" id="clubs">
+      <div class="carousel" aria-roledescription="carousel" tabindex="0" aria-label="About slides carousel">
+        <button class="carousel-button prev" aria-label="Previous slide">‹</button>
+        <div class="feature-grid" role="list">
+        <div class="feature-card">
+          <h3>Data Quest Club</h3>
+          <p>The Data Quest Club is the technical arm of DaS for students who want hands-on experience building data-driven solutions. It focuses on practical skill-building, collaboration, and preparing students for competitions and industry projects.</p>
+          <ul>
+            <li><strong>Activities:</strong> weekly workshops, project sprints, Kaggle & datathon teams, code reviews, and guest speaker sessions.</li>
+            <li><strong>Membership:</strong> open to all levels — beginners to advanced; mentorship circles pair newcomers with senior students.</li>
+            <li><strong>Representative Projects:</strong> recommendation systems, image-classification pilots, campus analytics dashboards.</li>
+            <li><strong>Join:</strong> attend a meetup or contact the club lead via the department office.</li>
+          </ul>
+        </div>
+
+        <div class="feature-card">
+          <h3>Caring Hands Club</h3>
+          <p>Caring Hands is our community and outreach club focused on social impact. It brings together students who want to contribute to society through volunteer work, awareness campaigns, and collaborative service projects.</p>
+          <ul>
+            <li><strong>Activities:</strong> blood drives, community tutoring, environmental clean-ups, fundraisers, and health awareness events.</li>
+            <li><strong>Membership:</strong> all students are welcome — activities scheduled flexibly around academics.</li>
+            <li><strong>Impact:</strong> partnerships with local NGOs and campus initiatives that provide measurable community benefits.</li>
+            <li><strong>Join:</strong> attend the next introductory meeting or contact the club coordinator.</li>
+          </ul>
+        </div>
+        
+        <div class="feature-card">
+          <h3>Syllabus Box</h3>
+          <p>Organized academic resources to help students navigate the curriculum and prepare for exams.</p>
+          <ul>
+            <li><strong>Year-wise Subjects:</strong> Clear lists of subjects and course objectives for each academic year/semester.</li>
+            <li><strong>Previous Year Question Papers:</strong> Downloadable past papers organized by year and subject to aid exam preparation.</li>
+            <li><strong>PDF Notes & Study Materials:</strong> Lecture notes, summaries, and reference PDFs curated by faculty and senior students.</li>
+            <li><strong>More:</strong> Syllabus copies, recommended readings, external MOOCs, and dataset links for hands-on practice.</li>
+          </ul>
+        </div>
+
+        <div class="feature-card match-size">
+          <h3>Events & Celebrations</h3>
+          <ul style="margin-top:12px;line-height:1.8;">
+            <li><strong>P4P:</strong> Flagship project showcase where student teams present practical, impact-focused projects for campus and community use — encourages hands-on learning and cross-team collaboration.</li>
+            <li><strong>Teachers' Day Celebration:</strong> Annual event to honor faculty, featuring student performances, guest talks, and award recognitions.</li>
+            <li><strong>Ganesh Chaturthi:</strong> Community festival with cultural programs, group prayers, and student-led volunteer activities that foster unity and celebration on campus.</li>
+          </ul>
+        </div>
+        
+        <div class="feature-card">
+          <h3>Which Is Better?</h3>
+          <p>Both clubs offer valuable experiences — the right choice depends on what you want to gain:</p>
+          <ul>
+            <li><strong>Data Quest Club:</strong> Best if you want technical training, project experience, and competition prep.</li>
+            <li><strong>Caring Hands Club:</strong> Best if you seek community service, leadership in outreach, and social impact work.</li>
+            <li><strong>Try both:</strong> Many students join both clubs to build technical skills while contributing to the community — complementary benefits.</li>
+            <li><strong>How to choose:</strong> Attend intro meetings for each club, try a workshop, then decide which aligns with your goals.</li>
+          </ul>
+        </div>
+        </div>
+        <button class="carousel-button next" aria-label="Next slide">›</button>
+        <div class="carousel-dots" role="tablist" aria-label="Carousel Navigation"></div>
+      </div>
+      <style>
+        .carousel:focus { outline: 3px solid rgba(163,118,162,0.22); outline-offset: 6px; }
+      </style>
+    </div>
+  </main>
+
+  <!-- Faculty Details Section -->
+<section class="faculty-section">
+  <h2>Faculty Details</h2>
+
+  <div class="faculty-row">
+
+    <!-- Principal -->
+    <div class="faculty-card">
+      <img src="{% static 'images/Dr.K.Prakash_.jpg' %}" alt="Dr. K. Prakash" class="faculty-photo">
+      <h3>Dr. K. Prakash</h3>
+      <p>Principal, VCE</p>
+    </div>
+
+    <!-- Vice Principal -->
+    <div class="faculty-card">
+      <img src="{% static 'images/thirupathirao.jpeg.png' %}" alt="Dr. K. Thirupathi Rao" class="faculty-photo">
+      <h3>Dr. K. Thirupathi Rao</h3>
+      <p>Vice Principal, VCE</p>
+    </div>
+
+    <!-- HOD -->
+    <div class="faculty-card">
+      <img src="{% static 'images/Ayesha Bhanu Hod.png' %}" alt="Dr. Ayesha Banu" class="faculty-photo">
+      <h3>Dr. Ayesha Banu</h3>
+      <p>HOD CSE(Data Science), VCE</p>
+    </div>
+
+  </div>
+</section>
+
+
+  <!-- Footer -->
+
+  <footer>
+    © <strong>DaS</strong> — Department of Data Science Engineering
+  </footer>
+
+  <script>
+  // GSAP Animations
+  gsap.registerPlugin(ScrollTrigger);
+  
+  // Animate sections on load
+  const sections = document.querySelectorAll('.content-section');
+  sections.forEach((section, index) => {
+    gsap.from(section, {
+      opacity: 0,
+      y: 30,
+      duration: 0.8,
+      delay: index * 0.15,
+      ease: "power3.out"
+    });
+  });
+
+  // Animate page header
+  gsap.from('.page-header h1', {
+    opacity: 0,
+    y: 30,
+    duration: 0.9,
+    ease: "power3.out"
+  });
+
+  gsap.from('.page-header .subtitle', {
+    opacity: 0,
+    y: 20,
+    duration: 0.8,
+    delay: 0.2,
+    ease: "power3.out"
+  });
+
+  // Animate stats
+  gsap.from('.stat-box', {
+    opacity: 0,
+    y: 30,
+    duration: 0.6,
+    stagger: 0.1,
+    immediateRender: false,
+    scrollTrigger: {
+      trigger: '.stats-grid',
+      start: 'top 80%'
+    }
+  });
+
+  // Animate feature cards on scroll
+  gsap.from('.feature-card', {
+    opacity: 0,
+    y: 40,
+    duration: 0.7,
+    stagger: 0.15,
+    immediateRender: false,
+    scrollTrigger: {
+      trigger: '.feature-grid',
+      start: 'top 70%'
+    }
+  });
+
+  // Animate faculty section
+  gsap.from('.faculty-card', {
+    opacity: 0,
+    y: 40,
+    duration: 0.8,
+    ease: "power3.out",
+    scrollTrigger: {
+      trigger: '.faculty-section',
+      start: 'top 80%'
+    }
+  });
+
+  // Carousel functionality
+  (function(){
+    const container = document.querySelector('.feature-grid');
+    if(!container) return;
+    const slides = Array.from(container.querySelectorAll('.feature-card'));
+    const prevBtn = document.querySelector('.carousel-button.prev');
+    const nextBtn = document.querySelector('.carousel-button.next');
+    const dotsWrap = document.querySelector('.carousel-dots');
+    const slideCount = slides.length;
+    let current = 0;
+    let timer = null;
+    const delay = 4000;
+
+    // build dots
+    slides.forEach((s, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'dot';
+      dot.setAttribute('aria-label', 'Go to slide ' + (i+1));
+      dot.setAttribute('role','tab');
+      dot.addEventListener('click', () => goTo(i, true));
+      dotsWrap.appendChild(dot);
+    });
+
+    const dots = Array.from(dotsWrap.children);
+
+    function updateActive(){
+      dots.forEach((d,idx)=> d.classList.toggle('active', idx===current));
+      if(dots[current]) dots[current].setAttribute('aria-selected','true');
+    }
+
+    function goTo(index, user){
+      current = (index + slideCount) % slideCount;
+      const target = slides[current];
+      if(!target) return;
+      const left = target.offsetLeft;
+      gsap.to(container, { duration: 0.6, scrollLeft: left, ease: 'power3.out' });
+      updateActive();
+      if(user) restartTimer();
+    }
+
+    function next(){ goTo(current+1); }
+    function prev(){ goTo(current-1); }
+
+    function startTimer(){ if(timer) clearInterval(timer); timer = setInterval(next, delay); }
+    function stopTimer(){ if(timer) { clearInterval(timer); timer = null; } }
+    function restartTimer(){ stopTimer(); startTimer(); }
+
+    let deb; container.addEventListener('scroll', ()=>{
+      clearTimeout(deb);
+      deb = setTimeout(()=>{
+        const left = container.scrollLeft;
+        let nearest = 0; let minD = Infinity;
+        slides.forEach((s,i)=>{
+          const d = Math.abs(s.offsetLeft - left);
+          if(d<minD){ minD=d; nearest=i; }
+        });
+        current = nearest; updateActive();
+      },120);
+    });
+
+    if(nextBtn) nextBtn.addEventListener('click', ()=>{ next(); restartTimer(); });
+    if(prevBtn) prevBtn.addEventListener('click', ()=>{ prev(); restartTimer(); });
+
+    // pause on hover/focus
+    container.addEventListener('mouseenter', stopTimer);
+    container.addEventListener('mouseleave', startTimer);
+    container.addEventListener('focusin', stopTimer);
+    container.addEventListener('focusout', startTimer);
+
+    // keyboard navigation on carousel when focused
+    const carouselEl = document.querySelector('.carousel');
+    if(carouselEl){
+      carouselEl.addEventListener('keydown', (e)=>{
+        if(e.key === 'ArrowRight'){
+          next(); restartTimer(); e.preventDefault();
+        } else if(e.key === 'ArrowLeft'){
+          prev(); restartTimer(); e.preventDefault();
+        }
+      });
+    }
+
+    // init
+    updateActive();
+    startTimer();
+    goTo(0);
+  })();
+  </script>
+</body>
+</html>

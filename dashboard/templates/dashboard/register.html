@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DaS — Register</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --c1:#6B3F69;
+      --c2:#8D5F8C;
+      --c3:#A376A2;
+      --c4:#DDC3C3;
+      --bg-dark: #0f0c10;
+      --glass: rgba(255,255,255,0.03);
+      --glass-strong: rgba(255,255,255,0.06);
+      --radius: 14px;
+      --maxw: 520px;
+      --ff-head: "Inter", "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:var(--ff-head);-webkit-font-smoothing:antialiased}
+    body{
+      background:linear-gradient(180deg,var(--bg-dark) 0%, #141018 100%);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:100vh;
+      padding:0;
+    }
+    .register-wrap{
+      width:100%;
+      max-width:var(--maxw);
+      margin:0 auto;
+      padding:32px 0;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+    }
+    .reg-card{
+      width:100%;
+      border-radius:18px;
+      padding:36px 28px 28px 28px;
+      background: linear-gradient(180deg, var(--glass), rgba(255,255,255,0.02));
+      border: 1px solid var(--glass-strong);
+      box-shadow: 0 10px 40px rgba(13,10,16,0.6), 0 2px 12px rgba(107,63,105,0.06);
+      backdrop-filter: blur(12px) saturate(120%);
+      -webkit-backdrop-filter: blur(12px) saturate(120%);
+      color: #fff;
+      border :white 1px solid;
+      margin-top: 250px;
+    }
+    .reg-card h2{
+      margin:0 0 16px 0;
+      font-size:26px;
+      font-weight:800;
+      color:var(--c4);
+      text-align:center;
+      color: linear-gradient(90deg,var(--c1),var(--c2));
+      color: var(--c2);
+    }
+    .reg-sub{
+      margin-bottom:18px;
+      color:rgba(255,255,255,0.78);
+      font-size:14px;
+      text-align:center;
+    }
+    .form-group{
+      position:relative;
+      margin-bottom:14px;
+      display:flex;
+      flex-direction:column;
+    }
+    .form-input,
+    .form-select{
+      width:100%;
+      padding:12px 14px;
+      border-radius:12px;
+      border:1px solid var(--glass-strong);
+      background: rgba(0,0,0,0.25);
+      color:#fff;
+      font-size:15px;
+      outline:none;
+      transition:all .18s ease;
+      appearance: none;
+      border: white 1px solid;
+    }
+    .form-input:focus,
+    .form-select:focus{
+      box-shadow: 0 6px 30px rgba(139,83,140,0.08);
+      border-color: var(--c2);
+      background: rgba(255,255,255,0.02);
+    }
+    .form-label{
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: var(--c4);
+      font-size: 1rem;
+    }
+    .btn{
+      margin-top:12px;
+      width:100%;
+      padding:12px 14px;
+      border-radius:12px;
+      border:none;
+      font-weight:700;
+      cursor:pointer;
+      background: linear-gradient(90deg,var(--c1),var(--c2));
+      color:white;
+      box-shadow: 0 16px 60px rgba(107,63,105,0.12);
+      transition:transform .18s;
+    }
+    .btn:hover{transform:translateY(-4px)}
+    .help{
+      margin-top:12px;
+      font-size:13px;
+      color:rgba(255,255,255,0.68);
+      text-align:center
+    }
+  </style>
+</head>
+<body>
+  <div class="register-wrap">
+    
+    <div class="reg-card" role="form" aria-labelledby="regTitle">
+      <h2 id="regTitle">Create your DaS account</h2>
+      <!-- <div class="reg-sub">Join the Department of Data Science — access notes, clubs, events and more.</div> -->
+
+      <form id="regForm" method="POST" action="{% url 'dashboard:register' %}">
+        {% csrf_token %}
+        
+        <div class="form-group">
+          <label class="form-label" for="fullname">Full name</label>
+          <input class="form-input" id="fullname" name="fullname" type="text" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">Email</label>
+          <input class="form-input" id="email" name="email" type="email" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="phone">Phone number</label>
+          <input class="form-input" id="phone" name="phone" type="tel" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="year">Year</label>
+          <select class="form-select" id="year" name="year" required>
+            <option value="" hidden></option>
+            <option>1st Year</option>
+            <option>2nd Year</option>
+            <option>3rd Year</option>
+            <option>4th Year</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="dept">Department</label>
+          <select class="form-select" id="dept" name="dept" required>
+            <option value="" hidden></option>
+            <option>CSE (Data Science)</option>
+            <option>CSE(AI&ML)</option>
+            <option>CSE</option>
+            <option>ECE</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input class="form-input" id="password" name="password" type="password" required minlength="6" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="confirm">Confirm password</label>
+          <input class="form-input" id="confirm" name="confirm" type="password" required minlength="6" />
+        </div>
+
+        <div id="passwordError" style="color: #ffb3b3; font-size: 13px; margin-top: -8px; display: none;"></div>
+       
+        <button class="btn" id="createBtn" type="submit"> Register </button></div>
+
+        <div class="help">
+          Already have an account? <a style="color:var(--c3)" href="{% url 'dashboard:login' %}">Login</a>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+<script>
+  const passwordInput = document.getElementById('password');
+  const confirmInput  = document.getElementById('confirm');
+  const passwordError = document.getElementById('passwordError');
+
+  // LIVE MATCH CHECK
+  function checkPasswordMatch() {
+    if (confirmInput.value && passwordInput.value !== confirmInput.value) {
+      passwordError.style.display = "block";
+      passwordError.textContent = "Passwords do not match.";
+    } else {
+      passwordError.style.display = "none";
+      passwordError.textContent = "";
+    }
+  }
+
+  passwordInput.addEventListener("input", checkPasswordMatch);
+  confirmInput.addEventListener("input", checkPasswordMatch);
+
+  // FORM SUBMIT VALIDATION
+//   document.getElementById('regForm').addEventListener('submit', function(e){
+    // Default();e.prevent
+
+//     const fullname = document.getElementById('fullname').value.trim();
+//     const email    = document.getElementById('email').value.trim();
+//     const password = passwordInput.value;
+//     const confirm  = confirmInput.value;
+
+//     if (!fullname || !email || !password || !confirm) {
+//       alert("Please complete all required fields.");
+//       return;
+//     }
+
+//     if (password !== confirm) {
+//       alert("Passwords do not match.");
+//       confirmInput.focus();
+//       return;
+//     }
+
+//     alert("Registration successful (demo). Replace this with backend submission.");
+//     this.reset();
+//     window.location.href = "login.html"; // Redirect to login page
+//   });
+</script>
+
+</body>
+</html>

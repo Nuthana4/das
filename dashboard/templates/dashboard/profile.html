@@ -1,0 +1,321 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DaS — Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --c1:#6B3F69;
+      --c2:#8D5F8C;
+      --c3:#A376A2;
+      --c4:#DDC3C3;
+      --bg-dark: #0f0c10;
+      --glass: rgba(255,255,255,0.03);
+      --glass-strong: rgba(255,255,255,0.06);
+      --radius: 14px;
+      --maxw: 520px;
+      --ff-head: "Inter", "Poppins", system-ui;
+    }
+    *{box-sizing:border-box}
+    html,body{
+      margin:0;
+      height:100%;
+      font-family:var(--ff-head);
+      background:linear-gradient(180deg,var(--bg-dark) 0%, #141018 100%);
+      color:#fff;
+    }
+
+    /* Header
+  header.topbar{
+    position:fixed;
+    left:0;
+    right:0;
+    top:18px;
+    z-index:80;
+    width: 100%;
+    display:flex;
+    justify-content:center;
+    pointer-events:none;
+  }
+  
+  .topbar-inner{
+    width:100%;
+    max-width:var(--maxw);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:10px 16px;
+    pointer-events:auto;
+    background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.03);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 8px 40px rgba(4,3,6,0.6);
+  }
+
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-weight:700;
+    color:var(--c4);
+    text-decoration:none;
+  }
+  
+  .logo .meta{
+    font-size:12px;
+    color:rgba(255,255,255,0.8);
+    line-height:1;
+  }
+
+  nav.header-nav{
+    display:flex;
+    gap:18px;
+    align-items:center;
+  }
+  
+  nav a{
+    color:rgba(255,255,255,0.9);
+    text-decoration:none;
+    padding:8px 12px;
+    border-radius:10px;
+    font-weight:600;
+    transition:all .25s;
+  }
+  
+  nav a:hover, nav a.active{
+    transform:translateY(-4px);
+    color:#fff;
+    box-shadow:0 10px 30px rgba(107,63,105,0.08);
+    background:rgba(255,255,255,0.02);
+  } */
+
+
+    .profile-wrap{
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:32px 20px;
+      border: solid 1px white;
+    }
+
+    .profile-card{
+      width:100%;
+      max-width:var(--maxw);
+      background:linear-gradient(180deg,var(--glass),rgba(255,255,255,0.02));
+      border:1px solid white;
+      padding:36px 28px;
+      border-radius:18px;
+      backdrop-filter: blur(12px) saturate(120%);
+      -webkit-backdrop-filter: blur(12px) saturate(120%);
+      box-shadow:0 10px 40px rgba(13,10,16,0.6);
+      text-align:center;
+    }
+
+    .profile-card h2{
+      margin:0 0 6px 0;
+      font-size:28px;
+      font-weight:800;
+      color:var(--c4);
+      
+    }
+
+    .profile-sub{
+      margin-bottom:24px;
+      color:rgba(255,255,255,0.78);
+      font-size:14px;
+      
+    }
+
+    .avatar{
+      width:100px;
+      height:100px;
+      border-radius:50%;
+      background:var(--c3);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      margin:0 auto 18px auto;
+      font-size:36px;
+      font-weight:700;
+      color:#fff;
+      border: #DDC3C3 3px solid;
+      box-shadow:0 6px 18px rgba(163,118,162,0.25);
+    }
+
+    .info-group{
+      margin:16px 0;
+      text-align:left;
+      
+    }
+    .info-label{
+      font-size:14px;
+      color:var(--c4);
+      margin-bottom:4px;
+      font-weight:600;
+      
+    }
+    .info-value{
+      padding:12px;
+      width:100%;
+      border-radius:12px;
+      background:rgba(0,0,0,0.25);
+      border:1px solid var(--glass-strong);
+      font-size:15px;
+      border: #fff 1px solid;
+    }
+
+    #editBtn,#saveBtn,#logoutBtn{
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:12px;
+      margin-top:14px;
+      font-weight:700;
+      cursor:pointer;
+      color:#fff;
+      background:linear-gradient(90deg,var(--c1),var(--c2));
+    }
+    #logoutBtn{
+      background:#b03c3c;
+      margin-top:10px;
+    }
+    #hmebtn{
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:12px;
+      margin-top:14px;
+      font-weight:700;
+      cursor:pointer;
+      color:#fff;
+      background:linear-gradient(90deg,#346ab0,#5883d6);
+    }
+  </style>
+
+</head>
+<body>
+<!-- Topbar -->
+    <!-- <header class="topbar" role="banner">
+      <div class="topbar-inner">
+        <a class="logo" href="index.html">
+          <div class="meta">
+            <div style="font-weight:800">DaS</div>
+            <div style="font-size:12px;opacity:0.75;margin-top:4px">Department of Data Science</div>
+          </div>
+        </a>
+
+        <nav class="header-nav">
+          <a href="{% url 'dashboard:main' %}">Home</a>
+          <a href="{% url 'dashboard:about_das' %}">About</a>
+          <a href="{% url 'dashboard:contact_das' %}">Contact</a>
+          <a href="{% url 'dashboard:profile' %}" class="active">Profile</a>
+        </nav>
+
+        <button class="hamburger" id="hambtn" aria-label="Open menu">
+          <span class="bar"></span>
+        </button>
+      </div>
+    </header>
+
+    <!- Mobile panel --
+    <aside class="mobile-panel" id="mobilePanel">
+      <div class="inner">
+        <a href="{% url 'dashboard:main' %}">Home</a>
+        <a href="{% url 'dashboard:about_das' %}">About</a>
+        <a href="{% url 'dashboard:contact_das' %}">Contact</a>
+        <a href="{% url 'dashboard:profile' %}">Profile</a>
+      </div>
+    </aside> -->
+
+  <div class="profile-wrap">
+    <div class="profile-card">
+
+      <div class="avatar" id="avatar">U</div>
+
+      <h2 id="profileName">User Name</h2>
+      <div class="profile-sub">Department of Data Science</div>
+
+      <div class="info-group">
+        <div class="info-label">Full Name</div>
+        <input id="fullname" class="info-value" disabled />
+      </div>
+
+      <div class="info-group">
+        <div class="info-label">Email</div>
+        <input id="email" class="info-value" disabled />
+      </div>
+
+      <div class="info-group">
+        <div class="info-label">Phone</div>
+        <input id="phone" class="info-value" disabled />
+      </div>
+
+      <div class="info-group">
+        <div class="info-label">Year</div>
+        <input id="year" class="info-value" disabled />
+      </div>
+
+      <div class="info-group">
+        <div class="info-label">Department</div>
+        <input id="dept" class="info-value" disabled />
+      </div>
+
+      <button id="editBtn">Edit Profile</button>
+      <button id="saveBtn" style="display:none;">Save Changes</button>
+      <a href="{% url 'dashboard:main' %}" >
+      <button id="hmebtn">GO TO HOME</button>
+      <a href="{% url 'dashboard:login' %}">
+  <button id="logoutBtn">Logout</button>
+</a>
+      
+
+
+    </div>
+  </div>
+
+<script>
+  // PRETEND LOADED USER DATA (Replace with actual backend values)
+  const user = {
+    fullname: "John Doe",
+    email: "john@example.com",
+    phone: "9876543210",
+    year: "2nd Year",
+    dept: "CSE (Data Science)"
+  };
+
+  // FILL DATA INTO FIELDS
+  document.getElementById("fullname").value = user.fullname;
+  document.getElementById("email").value = user.email;
+  document.getElementById("phone").value = user.phone;
+  document.getElementById("year").value = user.year;
+  document.getElementById("dept").value = user.dept;
+
+  document.getElementById("profileName").innerText = user.fullname;
+  document.getElementById("avatar").innerText = user.fullname.charAt(0).toUpperCase();
+
+  // EDIT MODE
+  const fields = ["fullname","email","phone","year","dept"];
+
+  document.getElementById("editBtn").onclick = () => {
+    fields.forEach(id => document.getElementById(id).disabled = false);
+    document.getElementById("editBtn").style.display = "none";
+    document.getElementById("saveBtn").style.display = "block";
+  };
+
+  document.getElementById("saveBtn").onclick = () => {
+    fields.forEach(id => document.getElementById(id).disabled = true);
+    document.getElementById("editBtn").style.display = "block";
+    document.getElementById("saveBtn").style.display = "none";
+
+    alert("Changes saved (demo). Hook this to your backend.");
+  };
+</script>
+
+</body>
+</html>
